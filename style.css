@@ -17,6 +17,7 @@
     font-size: 60px;
     color: var(--text_light);
     font-weight: bold;
+    padding-top: 5px;
   }
   button {
     cursor: pointer;

@@ -1,6 +1,9 @@
 
 
-weatherAPI = "API";
+const weatherAPI = "API";
+
+const listOfCities = [];
+
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("city-form");
@@ -11,9 +14,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const input = document.getElementById("city-input");
       if (input) {
         const cityInput = input.value;
+        if (!containsCity(cityInput)) {
         const API_URL = `http://api.weatherapi.com/v1/current.json?key=${weatherAPI}&q=${cityInput}`;
         const weatherData = await fetchWeatherData(API_URL);
         addWeatherData(weatherData, cityInput);
+        listOfCities.push(cityInput);
+        }
+        else {
+          alert("City already on screen!");
+        }
       } else {
         console.error('Input element not found.');
       }
@@ -67,6 +76,10 @@ const correctTime = async (weatherData) => {
 
 const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+const containsCity = (city) => {
+   return listOfCities.includes(city);
 }
 
 
