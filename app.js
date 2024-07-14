@@ -45,7 +45,7 @@ const fetchWeatherData = async (url) => {
   }
   catch(error) {
     console.log(error);
-    msg.textContent = "Please choose a valid city!"
+    alert("Please choose a valid city!");
   }
 }
 
