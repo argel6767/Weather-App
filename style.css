@@ -72,6 +72,10 @@
   .weather-container {
     background-color: var(--text_light);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
   }
 
   @media screen and (max-width: 1000px) {
