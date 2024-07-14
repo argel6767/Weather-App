@@ -1,6 +1,6 @@
 
 
-weatherAPI = "API_KEY";
+weatherAPI = "API";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("city-form");
