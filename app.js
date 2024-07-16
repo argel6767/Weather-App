@@ -20,8 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
         //if so fetches data
         const API_URL = `http://api.weatherapi.com/v1/forecast.json?key=${weatherAPI}&q=${cityInput}`;
         const weatherData = await fetchWeatherData(API_URL);
+        const weatherObject = await createWeatherObject(weatherData);
         //creates li element
-        addWeatherData(weatherData, cityInput);
+        addWeatherData(weatherObject, cityInput);
         //push city to list
         listOfCities.push(cityInput);
         }
@@ -57,28 +58,22 @@ const fetchWeatherData = async (url) => {
 }
 
 //adds weather info for city to page
-const addWeatherData = async (weatherData, city) => {
+const addWeatherData = async (weatherObject, city) => {
   const citiesList = document.querySelector(".ajax-section .cities");
   const newCityWeather = document.createElement("li");
-  const weatherObject = await weatherData;
-  const currTemp = weatherObject.current.temp_f;
-  feelsLike = weatherObject.current.feelslike_f;
-  correctIcon = correctTime(weatherObject);
-  const humidity = weatherObject.current.humidity;
-  const windSpeed = weatherObject.current.wind_mph;
-  const rainChance = weatherObject.forecast.forecastday[0].day.daily_chance_of_rain;
+  const correctIcon = await correctTime(weatherObject);
   const weatherIconHTML = `<div class="weather-container">
   <h2 id="city-name">${capitalizeFirstLetter(city)}</h2>
   ${correctIcon}
-  <h3>${currTemp}&deg; F</h3>
-  <p id="feels-like">feels like: ${feelsLike}</p>
+  <h3>${weatherObject.currTemp}&deg; F</h3>
+  <p id="feels-like">feels like: ${weatherObject.feelsLike}</p>
   <div id="bottom-section">
     <div class="bottom-section-third"><p>Humidity</p>
-    <p>${humidity}%</p></div>
+    <p>${weatherObject.humidity}%</p></div>
     <div class="bottom-section-third"><p>Wind</p>
-    <p>${windSpeed} mph</p></div>
+    <p>${weatherObject.windSpeed} mph</p></div>
     <div class="bottom-section-third"><p>Precipitation</p>
-    <p>${rainChance}%</p></div>
+    <p>${weatherObject.rainChance}%</p></div>
   </div>
   </div>`
   newCityWeather.innerHTML = weatherIconHTML;
@@ -86,8 +81,8 @@ const addWeatherData = async (weatherData, city) => {
 }
 
 //puts correct image for weather 
-const correctTime = (weatherData) => {
-  const cityTime = weatherData.location.localtime;
+const correctTime = async (weatherObject) => {
+  const cityTime = await weatherObject.cityTime;
   const actualTime = cityTime.split(" ")[1];
   const hour = parseInt(actualTime.split(":")[0],10);
 
@@ -98,6 +93,21 @@ const correctTime = (weatherData) => {
   else {
     return `<img src="assets/moon.png"/>`
   }
+}
+
+
+//creates a weatherObject that holds a weather info
+const createWeatherObject = async(weatherData) => {
+  const weatherInfo = await weatherData;
+  const weatherObject = {
+    currTemp: weatherInfo.current.temp_f,
+    feelsLike: weatherInfo.current.feelslike_f,
+    humidity:weatherInfo.current.humidity,
+    windSpeed:weatherInfo.current.wind_mph,
+    rainChance: weatherInfo.forecast.forecastday[0].day.daily_chance_of_rain,
+    cityTime: weatherInfo.location.localtime
+  }
+  return weatherObject;
 }
 
 //capitalizes input for weather info
