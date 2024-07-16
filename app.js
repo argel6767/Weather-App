@@ -1,6 +1,6 @@
 
 
-const weatherAPI = "API";
+const weatherAPI = "";
 
 const listOfCities = [];
 
@@ -76,11 +76,11 @@ const addWeatherData = async (weatherData, city) => {
   <p id="feels-like">feels like: ${feelsLike}</p>
   <div id="bottom-section">
     <div class="bottom-section-third"><p>Humidity</p>
-    <p>${humidity}&deg;</p></div>
+    <p>${humidity}%</p></div>
     <div class="bottom-section-third"><p>Wind</p>
-    <p>${windSpeed}</p></div>
-    <div class="bottom-section-third"><p>Chance of rain</p>
-    <p>${rainChance}</p></div>
+    <p>${windSpeed} mph</p></div>
+    <div class="bottom-section-third"><p>Precipitation</p>
+    <p>${rainChance}%</p></div>
   </div>
   </div>`
   newCityWeather.innerHTML = weatherIconHTML;

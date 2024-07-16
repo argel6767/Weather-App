@@ -107,14 +107,20 @@
   #bottom-section {
     width: 100%;
     height: 50px;
-    padding-bottom: 10px;
     display: flex;
     background-color: #f0f0f0;
+    align-items: center;
+    justify-content: space-around;
   }
 
   .bottom-section-third {
     text-align: center;
     width: 33%;
+    background-color: inherit;
+    font-size: 11px;
+    justify-content: space-between;
+    white-space: nowrap;
+
   }
 
 
