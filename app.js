@@ -61,22 +61,7 @@ const fetchWeatherData = async (url) => {
 const addWeatherData = async (weatherObject, city) => {
   const citiesList = document.querySelector(".ajax-section .cities");
   const newCityWeather = document.createElement("li");
-  const correctIcon = await correctTime(weatherObject);
-  const weatherIconHTML = `<div class="weather-container">
-  <h2 id="city-name">${capitalizeFirstLetter(city)}</h2>
-  ${correctIcon}
-  <h3>${weatherObject.currTemp}&deg; F</h3>
-  <p id="feels-like">feels like: ${weatherObject.feelsLike}</p>
-  <div id="bottom-section">
-    <div class="bottom-section-third"><p>Humidity</p>
-    <p>${weatherObject.humidity}%</p></div>
-    <div class="bottom-section-third"><p>Wind</p>
-    <p>${weatherObject.windSpeed} mph</p></div>
-    <div class="bottom-section-third"><p>Precipitation</p>
-    <p>${weatherObject.rainChance}%</p></div>
-  </div>
-  </div>`
-  newCityWeather.innerHTML = weatherIconHTML;
+  newCityWeather.innerHTML = await createHTML(weatherObject, city);
   citiesList.appendChild(newCityWeather);
 }
 
@@ -109,6 +94,26 @@ const createWeatherObject = async(weatherData) => {
   }
   return weatherObject;
 }
+
+//creates HTML for page using info from weather object
+const createHTML = async (weatherObject, city) => {
+  const correctIcon = await correctTime(weatherObject);
+  return `<div class="weather-container">
+  <h2 id="city-name">${capitalizeFirstLetter(city)}</h2>
+  ${correctIcon}
+  <h3>${weatherObject.currTemp}&deg; F</h3>
+  <p id="feels-like">feels like: ${weatherObject.feelsLike}</p>
+  <div id="bottom-section">
+    <div class="bottom-section-third"><p>Humidity</p>
+    <p>${weatherObject.humidity}%</p></div>
+    <div class="bottom-section-third"><p>Wind</p>
+    <p>${weatherObject.windSpeed} mph</p></div>
+    <div class="bottom-section-third"><p>Precipitation</p>
+    <p>${weatherObject.rainChance}%</p></div>
+  </div>
+  </div>`;
+}
+
 
 //capitalizes input for weather info
 const capitalizeFirstLetter = (string) => {
