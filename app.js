@@ -1,5 +1,3 @@
-
-
 const weatherAPI = "";
 
 const listOfCities = [];
